@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>SpeakVaN! — English Pronunciation Coach</title>
+<meta name="description" content="English speaking & pronunciation practice for Vietnamese learners" />
+<link rel="manifest" href="manifest.json" />
+<meta name="theme-color" content="#fbf5ea" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%2334c759%22/><text x=%2250%22 y=%2266%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>S</text></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.2 7.7L4 20.5l1.4-4.6A8.5 8.5 0 1 1 21 11.5Z"></path><path d="M8.5 12h.01M12 12h.01M15.5 12h.01"></path></svg>
+        </span>
+        <span class="brand-name">SpeakVaN!</span>
+      </div>
+      <div class="header-right">
+        <div class="streak" id="streakBadge">
+          <svg class="ic" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c.6 3 2.2 4.2 3.4 5.8C16.6 9.4 18 11 18 14a6 6 0 0 1-12 0c0-2 .9-3.2 1.8-4 .2 1.4 1.1 2.2 1.9 2.2 1 0 1.6-.8 1.4-2.2C10.6 7.4 11 4.4 12 2Z"></path></svg>
+          <span id="streakNum">0</span>
+        </div>
+        <button class="vi-toggle" id="viToggle" aria-pressed="false" title="Show Vietnamese translations for tips and explanations">
+          <span class="vi-dot"></span>VI
+        </button>
+      </div>
+    </header>
+
+    <nav class="tabs" id="tabs">
+      <button class="tab active" data-tab="drills">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><rect x="3" y="9" width="2.6" height="6" rx="1.3" fill="currentColor" stroke="none"></rect><rect x="8" y="4.5" width="2.6" height="15" rx="1.3" fill="currentColor" stroke="none"></rect><rect x="13.4" y="8" width="2.6" height="8" rx="1.3" fill="currentColor" stroke="none"></rect><rect x="18.8" y="6" width="2.6" height="12" rx="1.3" fill="currentColor" stroke="none"></rect></svg>
+        Drills
+      </button>
+      <button class="tab" data-tab="shadow">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M17 2.5l3.5 3.5L17 9.5"></path><path d="M3.5 11V9.5a3.5 3.5 0 0 1 3.5-3.5h13"></path><path d="M7 21.5L3.5 18 7 14.5"></path><path d="M20.5 13v1.5a3.5 3.5 0 0 1-3.5 3.5H4"></path></svg>
+        Shadowing
+      </button>
+      <button class="tab" data-tab="progress">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16"></path><rect x="5.5" y="12" width="3.4" height="6" rx="1.2" fill="currentColor" stroke="none"></rect><rect x="10.8" y="8" width="3.4" height="10" rx="1.2" fill="currentColor" stroke="none"></rect><rect x="16.1" y="4.5" width="3.4" height="13.5" rx="1.2" fill="currentColor" stroke="none"></rect></svg>
+        Progress
+      </button>
+      <button class="tab" data-tab="settings">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"></circle><path d="M19.4 13a7.6 7.6 0 0 0 0-2l2-1.5-2-3.4-2.3.9a7.7 7.7 0 0 0-1.7-1l-.4-2.5h-3.9l-.4 2.5a7.7 7.7 0 0 0-1.7 1l-2.3-.9-2 3.4 2 1.5a7.6 7.6 0 0 0 0 2l-2 1.5 2 3.4 2.3-.9a7.7 7.7 0 0 0 1.7 1l.4 2.5h3.9l.4-2.5a7.7 7.7 0 0 0 1.7-1l2.3.9 2-3.4Z"></path></svg>
+        Settings
+      </button>
+    </nav>
+
+    <main id="content">
+
+      <!-- DRILLS TAB -->
+      <section id="tab-drills" class="tab-panel active">
+        <div id="drillCategoryList" class="card-list"></div>
+        <div id="drillView" class="drill-view hidden"></div>
+      </section>
+
+      <!-- SHADOWING TAB -->
+      <section id="tab-shadow" class="tab-panel">
+        <div id="shadowSetList" class="card-list"></div>
+        <div id="shadowView" class="drill-view hidden"></div>
+      </section>
+
+      <!-- PROGRESS TAB -->
+      <section id="tab-progress" class="tab-panel">
+        <h2 class="section-title">Your progress</h2>
+        <div class="stat-grid" id="statGrid"></div>
+        <h3 class="section-h3">Focus areas</h3>
+        <p class="section-subtitle">Sounds flagged most often in your attempts.</p>
+        <div id="focusAreas" class="focus-list"></div>
+        <h3 class="section-h3">Recent sessions</h3>
+        <div id="recentSessions" class="recent-list"></div>
+        <button id="resetProgress" class="btn-text-danger">Reset all progress</button>
+      </section>
+
+      <!-- SETTINGS TAB -->
+      <section id="tab-settings" class="tab-panel">
+        <h2 class="section-title">Settings</h2>
+        <p class="section-subtitle">Optionally connect an Azure AI Speech resource for higher-quality voices and phoneme-level pronunciation scoring. Everything works on the free browser engine without this.</p>
+
+        <div class="settings-card">
+          <div class="settings-row">
+            <div class="settings-row-text">
+              <span class="settings-row-title">Use Azure Text-to-Speech</span>
+              <span class="settings-row-sub">Neural voice playback instead of the browser's built-in voice.</span>
+            </div>
+            <button class="switch" id="toggleAzureTts" role="switch" aria-checked="false"><span class="switch-knob"></span></button>
+          </div>
+          <div class="settings-row">
+            <div class="settings-row-text">
+              <span class="settings-row-title">Use Azure Pronunciation Assessment</span>
+              <span class="settings-row-sub">Phoneme-level accuracy/fluency scoring instead of simple word matching.</span>
+            </div>
+            <button class="switch" id="toggleAzurePa" role="switch" aria-checked="false"><span class="switch-knob"></span></button>
+          </div>
+        </div>
+
+        <div class="settings-card">
+          <span class="settings-row-title">Azure Speech credentials</span>
+          <label class="settings-label" for="azureKeyInput">Speech key</label>
+          <input class="settings-input" id="azureKeyInput" type="password" autocomplete="off" placeholder="Paste your Azure Speech resource key" />
+          <label class="settings-label" for="azureRegionInput">Region</label>
+          <input class="settings-input" id="azureRegionInput" type="text" autocomplete="off" placeholder="e.g. eastus, southeastasia" />
+          <button class="btn-primary" id="saveAzureSettings" style="margin-top:10px">Save</button>
+          <span class="settings-status" id="azureStatus"></span>
+        </div>
+
+        <div class="settings-note">
+          🔒 Your key is stored only in this browser's local storage and sent directly from your browser to Azure — it never passes through any server of ours. Because this app has no backend, the key is visible in this browser's dev tools/network requests, so only use a key you're comfortable having exposed on this device (fine for personal use or a small trusted pilot; not safe for a public unauthenticated deployment). See README for how to create a free-tier Azure AI Speech resource.
+        </div>
+
+        <div class="settings-card">
+          <span class="settings-row-title">Text-to-speech cache</span>
+          <span class="settings-row-sub">Synthesized audio is cached on this device so replaying the same line doesn't call the Azure API again.</span>
+          <div class="settings-row" style="margin-top:10px">
+            <div class="settings-row-text">
+              <span class="settings-row-title" id="ttsCacheSize">— entries · — MB</span>
+            </div>
+            <button class="btn-secondary" id="clearTtsCache">Clear cache</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <div id="toast" class="toast hidden"></div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
