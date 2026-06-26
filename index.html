@@ -126,4 +126,46 @@
           <span class="settings-row-title">Text-to-speech cache</span>
           <span class="settings-row-sub">Synthesized audio is cached on this device so replaying the same line doesn't call the Azure API again.</span>
           <div class="settings-row" style="margin-top:10px">
-            <div 
+            <div class="settings-row-text">
+              <span class="settings-row-title" id="ttsCacheSize">— entries · — MB</span>
+            </div>
+            <button class="btn-secondary" id="clearTtsCache">Clear cache</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <div id="toast" class="toast hidden"></div>
+  </div>
+
+  <!-- Content data (no logic). Order doesn't matter within this group. -->
+  <script src="data/drill-categories.js"></script>
+  <script src="data/shadowing-beginner.js"></script>
+  <script src="data/shadowing-intermediate.js"></script>
+  <script src="data/shadowing-advanced.js"></script>
+  <script src="data/shadowing-sets.js"></script>
+  <script src="data/skill-tree.js"></script>
+
+  <!-- App logic. Plain global scripts (no bundler/modules), so load
+       order matters: low-level helpers first, UI renderers next,
+       main.js last since it calls functions defined in every file above. -->
+  <script src="app/storage.js"></script>
+  <script src="app/design-tokens.js"></script>
+  <script src="app/toast.js"></script>
+  <script src="app/i18n.js"></script>
+  <script src="app/azure-config.js"></script>
+  <script src="app/tts-cache.js"></script>
+  <script src="app/tts.js"></script>
+  <script src="app/pronunciation-assessment.js"></script>
+  <script src="app/recognition.js"></script>
+  <script src="app/scoring.js"></script>
+  <script src="app/drills-ui.js"></script>
+  <script src="app/shadowing-ui.js"></script>
+  <script src="app/skill-tree.js"></script>
+  <script src="app/daily-challenge.js"></script>
+  <script src="app/settings-ui.js"></script>
+  <script src="app/progress-ui.js"></script>
+  <script src="app/main.js"></script>
+</body>
+</html>

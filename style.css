@@ -512,4 +512,135 @@ h3.section-h3 { font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 16
 .focus-count { flex: none; font-size: 12px; font-weight: 800; color: var(--rec-dark); background: #fff0e8; padding: 3px 10px; border-radius: 10px; }
 .recent-score { flex: none; font-size: 12.5px; font-weight: 800; }
 
-.mute
+.muted { color: var(--ink-mute); font-size: 13px; }
+
+.btn-text-danger {
+  border: none; background: none; color: #c0392b; font-family: 'Nunito', sans-serif;
+  font-size: 13px; font-weight: 700; cursor: pointer; text-decoration: underline; padding: 6px 0;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 26px 16px;
+  color: var(--ink-mute);
+  font-size: 13.5px;
+  font-weight: 600;
+  background: #faf4e8;
+  border: 2px dashed var(--border-mid);
+  border-radius: 16px;
+}
+
+/* ---------- Settings tab ---------- */
+
+.settings-card {
+  background: #fff;
+  border: 2px solid var(--border-soft);
+  border-radius: 18px;
+  padding: 16px 16px;
+  box-shadow: 0 3px 0 var(--shadow-card);
+  margin-bottom: 16px;
+}
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 9px 0;
+}
+.settings-row + .settings-row { border-top: 1px solid var(--border-soft); }
+
+.settings-row-text { display: flex; flex-direction: column; gap: 3px; }
+.settings-row-title { font-family: 'Baloo 2', cursive; font-weight: 700; font-size: 15.5px; color: var(--ink); }
+.settings-row-sub { font-size: 12.5px; color: var(--ink-mute); font-weight: 600; line-height: 1.4; }
+
+.switch {
+  flex: none;
+  width: 46px;
+  height: 27px;
+  border-radius: 999px;
+  border: none;
+  background: var(--track);
+  position: relative;
+  cursor: pointer;
+  padding: 0;
+  transition: background .18s ease;
+}
+.switch .switch-knob {
+  position: absolute;
+  top: 3px; left: 3px;
+  width: 21px; height: 21px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,.25);
+  transition: transform .18s ease;
+}
+.switch[aria-checked="true"] { background: var(--green); }
+.switch[aria-checked="true"] .switch-knob { transform: translateX(19px); }
+
+.settings-label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink-faint);
+  margin: 12px 0 5px;
+}
+.settings-card > .settings-row-title { display: block; margin-bottom: 2px; }
+
+.settings-input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 2px solid var(--border-mid);
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--cream);
+}
+.settings-input:focus { outline: none; border-color: var(--blue); }
+
+.settings-status {
+  display: block;
+  margin-top: 10px;
+  font-size: 12.5px;
+  font-weight: 700;
+}
+.settings-status.is-ok { color: var(--green-dark); }
+.settings-status.is-off { color: var(--ink-mute); }
+
+.settings-note {
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--ink-light);
+  font-weight: 600;
+  background: #fff6e6;
+  border: 2px solid #ffe0a3;
+  border-radius: 16px;
+  padding: 13px 14px;
+}
+
+.word-diff .ok { color: #9a6a12; text-decoration: underline dotted #e0b35a; }
+
+/* ---------- Toast ---------- */
+
+.toast {
+  position: fixed;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ink);
+  color: #fff;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 13.5px;
+  padding: 11px 18px;
+  border-radius: 16px;
+  box-shadow: 0 8px 22px rgba(0,0,0,.22);
+  z-index: 999;
+  animation: svtoast .25s ease both;
+  max-width: 90vw;
+  text-align: center;
+}
+.toast.hidden { display: none; }

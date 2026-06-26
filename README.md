@@ -68,4 +68,48 @@ This app has **no backend server** — it's static HTML/CSS/JS that runs entirel
 - Your Azure key is stored only in **this browser's `localStorage`**, on this device. It is never committed to the code or sent to any server of ours.
 - However, because all Azure calls are made directly from the browser, **the key is visible in that browser's DevTools (Network tab / Application → Local Storage)** to anyone with access to that device or browser session.
 - This is an acceptable tradeoff for **personal use or a small trusted pilot** (e.g. you, or a handful of students using devices you control), but it is **not a safe pattern for a public, unauthenticated deployment** — anyone who opens DevTools on that page could copy your key and run up charges on your Azure account.
-- If you outgrow this trade
+- If you outgrow this tradeoff, the standard fix is the one already on the roadmap above: add a thin backend (even a single serverless function) that holds the Azure key server-side and proxies/token-exchanges on the client's behalf, so the raw key never reaches the browser.
+- You can revoke/rotate a leaked key anytime from the Azure Portal (**Keys and Endpoint** → regenerate), and Azure's free tier's usage caps limit worst-case exposure.
+
+## File structure
+
+The app is plain HTML/CSS/JS with **no build step or bundler** — every file is loaded via an ordinary `<script src="...">` tag in global scope, specifically so `index.html` can still be opened directly in a browser (a module-based setup would break that due to `file://` CORS restrictions). `app.js`/`data.js` were originally single files but grew unwieldy, so both were split into focused modules:
+
+```
+index.html     — app shell and markup, plus the script-tag load order
+style.css      — all styling (mobile-first, responsive)
+manifest.json  — PWA manifest (installable to home screen)
+sw.js          — service worker (offline app-shell caching)
+icon.svg       — app icon
+
+data/                          — content only, no logic
+  drill-categories.js          — the 16 Sound Drills categories
+  shadowing-beginner.js        — 10 Beginner shadowing sets
+  shadowing-intermediate.js    — 9 Intermediate shadowing sets
+  shadowing-advanced.js        — 8 Advanced shadowing sets
+  shadowing-sets.js            — combines the three shadowing files above
+  skill-tree.js                — Advanced→Foundation prerequisite pairings
+
+app/                           — app logic, one concern per file
+  storage.js                   — progress load/save (localStorage)
+  design-tokens.js             — colors, icons, inline SVGs
+  toast.js                     — toast notifications
+  i18n.js                      — the VI (Vietnamese) translation toggle
+  azure-config.js               — Azure key/region settings storage
+  tts-cache.js                 — IndexedDB cache for synthesized audio
+  tts.js                       — text-to-speech (browser + Azure)
+  pronunciation-assessment.js  — Azure phoneme-level scoring
+  recognition.js               — browser SpeechRecognition wrapper
+  scoring.js                   — word-match scoring/diffing
+  drills-ui.js                 — Sound Drills tab UI
+  shadowing-ui.js               — Shadowing tab UI
+  skill-tree.js                — Skill Tree view (see above)
+  daily-challenge.js           — Daily Weak-Spot Challenge (see above)
+  settings-ui.js                — Settings tab UI
+  progress-ui.js               — Progress tab UI
+  main.js                      — tab nav wiring, init, service worker registration (loaded last)
+```
+
+Load order matters: `data/*.js` and the low-level `app/*.js` helpers must load before the UI files that use them, and `main.js` loads last since it's the only file that calls the others' setup/render functions on startup. `index.html`'s script tags are already in the correct order and have comments explaining why.
+
+One small side effect of the split: the Shadowing tab's set list now appears in **Beginner → Intermediate → Advanced** order (it was a mixed order before), since the data is now naturally grouped by level.
