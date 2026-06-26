@@ -57,8 +57,15 @@
 
       <!-- DRILLS TAB -->
       <section id="tab-drills" class="tab-panel active">
+        <div id="dailyChallengeCard" class="challenge-card"></div>
+        <div class="view-toggle" id="drillViewToggle">
+          <button class="view-toggle-btn active" data-view="list">List</button>
+          <button class="view-toggle-btn" data-view="tree">Skill Tree</button>
+        </div>
         <div id="drillCategoryList" class="card-list"></div>
+        <div id="skillTreeView" class="skill-tree hidden"></div>
         <div id="drillView" class="drill-view hidden"></div>
+        <div id="challengeView" class="drill-view hidden"></div>
       </section>
 
       <!-- SHADOWING TAB -->
@@ -119,20 +126,4 @@
           <span class="settings-row-title">Text-to-speech cache</span>
           <span class="settings-row-sub">Synthesized audio is cached on this device so replaying the same line doesn't call the Azure API again.</span>
           <div class="settings-row" style="margin-top:10px">
-            <div class="settings-row-text">
-              <span class="settings-row-title" id="ttsCacheSize">— entries · — MB</span>
-            </div>
-            <button class="btn-secondary" id="clearTtsCache">Clear cache</button>
-          </div>
-        </div>
-      </section>
-
-    </main>
-
-    <div id="toast" class="toast hidden"></div>
-  </div>
-
-  <script src="data.js"></script>
-  <script src="app.js"></script>
-</body>
-</html>
+            <div 
