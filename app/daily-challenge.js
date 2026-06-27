@@ -174,6 +174,9 @@ function openDailyChallenge() {
   document.getElementById("drillCategoryList").classList.add("hidden");
   document.getElementById("skillTreeView").classList.add("hidden");
   document.getElementById("dailyChallengeCard").classList.add("hidden");
+  // Only one lesson view should ever be on screen at a time — make sure
+  // a Sound Drill detail view isn't left open underneath this one.
+  document.getElementById("drillView").classList.add("hidden");
   const toggle = document.getElementById("drillViewToggle");
   if (toggle) toggle.classList.add("hidden");
   document.getElementById("challengeView").classList.remove("hidden");

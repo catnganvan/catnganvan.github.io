@@ -27,4 +27,25 @@ const ASSETS = [
   "./app/scoring.js",
   "./app/drills-ui.js",
   "./app/shadowing-ui.js",
-  "./app/skill-tree.js"
+  "./app/skill-tree.js",
+  "./app/daily-challenge.js",
+  "./app/settings-ui.js",
+  "./app/progress-ui.js",
+  "./app/main.js"
+];
+
+self.addEventListener("install", (event) => {
+  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS)));
+});
+
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    caches.keys().then((keys) => Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k))))
+  );
+});
+
+self.addEventListener("fetch", (event) => {
+  event.respondWith(
+    caches.match(event.request).then((cached) => cached || fetch(event.request).catch(() => cached))
+  );
+});

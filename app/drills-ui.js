@@ -40,6 +40,12 @@ function openDrillCategory(catId) {
   if (tree) tree.classList.add("hidden");
   const toggle = document.getElementById("drillViewToggle");
   if (toggle) toggle.classList.add("hidden");
+  // Only one lesson view should ever be on screen at a time — make sure
+  // the daily challenge banner/view is tucked away before showing this one.
+  const challengeCard = document.getElementById("dailyChallengeCard");
+  if (challengeCard) challengeCard.classList.add("hidden");
+  const challengeView = document.getElementById("challengeView");
+  if (challengeView) challengeView.classList.add("hidden");
   document.getElementById("drillView").classList.remove("hidden");
   renderDrillItem();
 }
@@ -48,6 +54,11 @@ function closeDrillCategory() {
   document.getElementById("drillView").classList.add("hidden");
   const toggle = document.getElementById("drillViewToggle");
   if (toggle) toggle.classList.remove("hidden");
+  const challengeCard = document.getElementById("dailyChallengeCard");
+  if (challengeCard) {
+    challengeCard.classList.remove("hidden");
+    if (typeof renderDailyChallengeCard === "function") renderDailyChallengeCard();
+  }
   // Return to whichever view (list or skill tree) was active before.
   if (typeof drillViewMode !== "undefined" && drillViewMode === "tree") {
     document.getElementById("skillTreeView").classList.remove("hidden");

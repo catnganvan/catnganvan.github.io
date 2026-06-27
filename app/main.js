@@ -21,6 +21,15 @@ if ("speechSynthesis" in window) {
   window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
 }
 
+// Easter egg: tapping the brand icon next to "SpeakVaN!" reads out a
+// playful greeting. "Vuhn" is a phonetic respelling so the TTS engine
+// says the Vietnamese name "Van" with the same central vowel as "Vern"
+// but without the rhotic R sound (closer to "fun"'s vowel than "van"'s),
+// instead of the English word "van" (vehicle).
+document.getElementById("brandMark").addEventListener("click", () => {
+  speak("Speak more Vuhn! Eat more Vuhn, listen to your Daddy Vuhn", 0.95);
+});
+
 setupViToggle();
 setupSettingsTab();
 setupDrillViewToggle();
