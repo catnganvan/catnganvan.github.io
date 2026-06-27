@@ -2,7 +2,7 @@
 // loads offline. Speech recognition still requires network on
 // most browsers (it streams audio to a recognition service),
 // but the UI itself will load offline once cached.
-const CACHE_NAME = "speakvn-v2";
+const CACHE_NAME = "speakvn-v3";
 const ASSETS = [
   "./",
   "./index.html",
@@ -35,12 +35,21 @@ const ASSETS = [
 ];
 
 self.addEventListener("install", (event) => {
+  // Activate this new SW as soon as it's installed, instead of waiting for
+  // every open tab on the old SW to close — otherwise a fixed/updated
+  // deploy can keep getting served from the previous SW's stale cache.
+  self.skipWaiting();
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS)));
 });
 
 self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches.keys().then((keys) => Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k))))
+    caches.keys()
+      .then((keys) => Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k))))
+      // Take control of any already-open tabs immediately so they start
+      // getting fresh assets on their very next request, without needing
+      // a manual hard-refresh or closing/reopening the tab.
+      .then(() => self.clients.claim())
   );
 });
 
